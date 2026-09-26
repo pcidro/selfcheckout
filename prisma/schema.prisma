@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id             String         @id @default(uuid())
+  name           String
+  slug           String
+  description    String
+  avatarImageUrl String
+  coverImageUrl  String
+  createdAt      DateTime       @default(now())
+  menuCategory   MenuCategory[]
+  products       Product[]
+  orders         Order[]
+  updatedAt      DateTime       @updatedAt
+
+  @@map("restaurants")
+}
+
+model MenuCategory {
+  id           String     @id @default(uuid())
+  name         String
+  restaurantId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  products     Product[]
+
+  @@map("menuCategorys")
+}
+
+model Product {
+  id            String         @id @default(uuid())
+  restaurantId  String
+  name          String
+  description   String
+  price         Float
+  imageUrl      String
+  createdAt     DateTime       @default(now())
+  ingredients   String[]
+  isAvailable   Boolean        @default(true)
+  updatedAt     DateTime       @updatedAt
+  menuCategory  MenuCategory   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId    String
+  restaurant    Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  orderProducts OrderProduct[]
+
+  @@map("products")
+}
+
+model Order {
+  id               Int              @id @default(autoincrement())
+  total            Float
+  restaurantId     String
+  status           OrderStatus      @default(PENDING)
+  consuptionMethod ConsuptionMethod
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  orderProducts    OrderProduct[]
+  restaurant       Restaurant       @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  id        Int      @id @default(autoincrement())
+  productId String
+  orderId   Int
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("orderProducts")
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PREPARATION
+  FINISHED
+}
+
+enum ConsuptionMethod {
+  TAKEAWAY
+  DINE_IN
+}
