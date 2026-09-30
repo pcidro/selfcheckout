@@ -31,9 +31,11 @@ export default function MethodOption({
             className="object-contain"
           />
         </div>
-        <Link href={`/${slug}/menu?consumptionmethod=${option}`}>
-          <Button variant={"secondary"}>{buttonText}</Button>
-        </Link>
+        <Button variant="secondary" asChild>
+          <Link href={`/${slug}/menu?consumptionmethod=${option}`}>
+            {buttonText}
+          </Link>
+        </Button>
       </CardContent>
     </Card>
   );

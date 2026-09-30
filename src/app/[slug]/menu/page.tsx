@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 
 import { getRestaurantBySlug } from "@/data/getRestaurantBySlug";
 
+import HeaderMenu from "./components/header";
+
 export default async function PageMenu({
   params,
   searchParams,
@@ -26,8 +28,7 @@ export default async function PageMenu({
   }
   return (
     <div>
-      <p>{slug}</p>
-      <p>{consumptionmethod}</p>
+      <HeaderMenu restaurant={restaurant} />
     </div>
   );
 }
