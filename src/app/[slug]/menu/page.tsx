@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { getRestaurantBySlug } from "@/data/getRestaurantBySlug";
 
+import Categories from "./components/categories";
 import HeaderMenu from "./components/header";
 
 export default async function PageMenu({
@@ -29,6 +30,7 @@ export default async function PageMenu({
   return (
     <div>
       <HeaderMenu restaurant={restaurant} />
+      <Categories restaurant={restaurant} />
     </div>
   );
 }
