@@ -5,6 +5,11 @@ export async function getRestaurantBySlug(slug: string) {
     where: {
       slug,
     },
+    include: {
+      menuCategory: {
+        include: { products: true },
+      },
+    },
   });
   return restaurant;
 }
