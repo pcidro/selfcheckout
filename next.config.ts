@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "upload.wikimedia.org",
       },
+      {
+        protocol: "https",
+        hostname: "api-middleware-mcd.mcdonaldscupones.com",
+      },
+      {
+        protocol: "https",
+        hostname: "p2.trrsf.com",
+      },
+      {
+        protocol: "https",
+        hostname: "gkpb.com.br",
+      },
     ],
   },
 };
